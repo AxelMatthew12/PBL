@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TATIB Dashboard</title>
-    <link rel="stylesheet" href="../view/style/Mahasiswacss.css">
+    <link rel="stylesheet" href="../../../public/css/Dosen.css">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <a class="navbar-brand" href="#"></a>
-        <img src="../img/jti.png">
+        <img src="../../../public/img/dashboardDosen/jti.png">
         <p>Sistem Informasi Tata Tertib</p>
         <span class="navbar-toggler-icon"></span>
     </nav>
@@ -22,16 +22,13 @@
         <div class="sidebar">
             <div class="logo"></div>
             <div class="user-info">
-                <img src="../view/img/siswi1.jpeg" alt="Foto Mahasiswa">
+                <img src="../../../public/img/dashboardDosen/dosen.png" alt="Foto Dosen">
                 <table>
                     <tr>
-                        <td>Nama Mahasiswa</td>
+                        <td>Nama Dosen</td>
                     </tr>
                     <tr>
-                        <td>NIM</td>
-                    </tr>
-                    <tr>
-                        <td>Kelas</td>
+                        <td>NIDN</td>
                     </tr>
                 </table>
                 <br>
@@ -40,40 +37,38 @@
                 <p>MAIN MENU</p>
                 <li>Periode: 2024/2025</li>
                 <li>Dashboard</li>
-                <li>Riwayat Pelanggaran</li>
-                <li>Ganti Password</li>
+                <li>Daftar Pelanggaran Mahasiswa</li>
+                <li>Pengaturan</li>
+                <li>Melaporkan</li>
+                <li>Menerima Laporan</li>
             </ul>
         </div>
 
         <!-- Main Content -->
-        <div class="main-content">
+        <div class="main-content" >
             <div class="header1">
                 <h1>Dashboard</h1>
             </div>
-            <div class="notif">
+            <!-- <div class="notif">
                 <h4>Notifikasi!</h4>
                     <div class ="garis"></div>
                     <p> Halo! Vera Efita Hudi Putri, kamu mendapatkan laporan pelanggaran</p>
-                </div>
+                </div> -->
             <div class="content">
                 
-                <h2>Informasi Mahasiswa</h2>
+                <h2>Informasi Dosen</h2>
                 <p class="info">Info! Berikut adalah biodata diri anda</p>
                 
                 <div class="biodata">
-                    <img src="../view/img/siswi1.jpeg" alt="Foto Mahasiswa">
+                    <img src="../../../public/img/dashboardDosen/dosen.png" alt="Foto Dosen">
                     <table>
                         <tr>
                             <td>Nama</td>
-                            <td>: Vera Efita Hudi Putri</td>
+                            <td>: Vit Zuraida, S.Kom.,M.Kom</td>
                         </tr>
                         <tr>
-                            <td>NIM</td>
-                            <td>: 2341760047</td>
-                        </tr>
-                        <tr>
-                            <td>TTL</td>
-                            <td>: Tuban, 22 September 2004</td>
+                            <td>NIDN</td>
+                            <td>: 199011248</td>
                         </tr>
                         <tr>
                             <td>Jenis Kelamin</td>
@@ -81,11 +76,11 @@
                         </tr>
                         <tr>
                             <td>Alamat</td>
-                            <td>: jln. Senggani no 43D</td>
+                            <td>: Malang</td>
                         </tr>
                         <tr>
                             <td>Email</td>
-                            <td>: efitaraa22@gmail.com</td>
+                            <td>: vitzuraida@polinema.ac.id</td>
                         </tr>
                     </table>
                 </div>
