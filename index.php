@@ -166,12 +166,12 @@ if ($stmt === false) {
         </table>
     </div>
     <!-- /Table informasi tatib -->
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <!-- Tentang Kami -->
     <div id="about" class="container my-5">
         <h1 class="text-center mb-4">Konsep Website</h1>
