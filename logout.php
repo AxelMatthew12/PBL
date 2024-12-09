@@ -7,6 +7,6 @@ $session = new Session();
 $session->deleteAll(); 
 
 // Redirect ke halaman login setelah logout
-header('Location: login.php', false); 
+header('Location: index.php', false);
 exit();
 ?>
