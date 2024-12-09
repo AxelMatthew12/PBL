@@ -1,8 +1,10 @@
 
 <?php
 require_once 'controller/lib/Connection.php';
+
 $connection = new Connection();
 $conn = $connection->connect();
+
 // Query untuk mengambil data dari tabel pelanggaran dengan JOIN ke tabel sanksi
 $sql = "
 SELECT 
@@ -118,9 +120,11 @@ if ($stmt === false) {
 <br>
 <br>
 <br>
+
 <!-- Tabel Informasi Tata Tertib -->
 <div id="informasi" class="container mt-5">
     <h1 class="text-center mb-4">INFORMASI LIST  TATA TERTIB JTI </h1>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card text-center shadow-sm p-3 mb-4">
@@ -133,6 +137,7 @@ if ($stmt === false) {
                 </div>
             </div>
         </div>
+
         <table class="table table-bordered table-striped">
             <thead>
             <tr>
@@ -225,3 +230,4 @@ if ($stmt === false) {
     <!-- /Scripts -->
 
 </body>
+</html>
