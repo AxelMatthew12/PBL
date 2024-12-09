@@ -1,3 +1,4 @@
+
 <?php
 require_once 'controller/lib/Connection.php';
 $connection = new Connection();
@@ -6,12 +7,12 @@ $conn = $connection->connect();
 $sql = "
 SELECT 
     pelanggaran.id,
-    pelanggaran.deskripsi AS deskripsi_pelanggaran,
-    pelanggaran.tingkat_id,
-    tingkat.deskripsi AS deskripsi_sanksi
+    pelanggaran.deskripsi AS pelanggaran_deskripsi,
+    pelanggaran.tingkat_pelanggaran,
+    sanksi.deskripsi AS sanksi_deskripsi
 FROM pelanggaran
-LEFT JOIN tingkat
-ON pelanggaran.tingkat_id = tingkat.tingkat;
+LEFT JOIN sanksi
+ON pelanggaran.tingkat_pelanggaran = sanksi.tingkat;
 ";
 //Test
 $stmt = sqlsrv_query($conn, $sql);
@@ -137,7 +138,7 @@ if ($stmt === false) {
             <tr>
                 <th>ID</th>
                 <th>Deskripsi Pelanggaran</th>
-                <th>Tingkatan</th>
+                <th>Tingkat Pelanggaran</th>
                 <th>Deskripsi Sanksi</th>
             </tr>
             </thead>
@@ -146,9 +147,9 @@ if ($stmt === false) {
                 <?php while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)): ?>
                     <tr>
                         <td><?= htmlspecialchars($row['id']) ?></td>
-                        <td><?= htmlspecialchars($row['deskripsi_pelanggaran']) ?></td>
-                        <td><?= htmlspecialchars($row['tingkat_id']) ?></td>
-                        <td><?= htmlspecialchars($row['deskripsi_sanksi'] ?? 'Tidak ada sanksi') ?></td>
+                        <td><?= htmlspecialchars($row['pelanggaran_deskripsi']) ?></td>
+                        <td><?= htmlspecialchars($row['tingkat_pelanggaran']) ?></td>
+                        <td><?= htmlspecialchars($row['sanksi_deskripsi'] ?? 'Tidak ada sanksi') ?></td>
                     </tr>
                 <?php endwhile; ?>
             <?php else: ?>
