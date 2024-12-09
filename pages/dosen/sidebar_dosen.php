@@ -47,7 +47,7 @@
         <img src="../../view/ProfileDosen/dosen.png" alt="Foto Dosen" style="width: 60px; height: 60px; margin-left: 0px; margin-top: 10px;">
         <table style="font-size: 12px; color: #302D2D;">
             <tr>
-                <td>Nama Dosen</td>
+                <td>Nama Mahasiswa</td>
             </tr>
         </table>
     </div>
@@ -60,37 +60,17 @@
             </tr>
             <tr>
                 <td>
-                    <a href="admin_dashboard.php?page=dashboard">Dashboard</a>
+                    <a href="dosen_dashboard.php?page=dashboard">Dashboard</a>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <a href="admin_dashboard.php?page=pelanggaran">Pelanggaran Mahasiswa</a>
+                    <a href="dosen_dashboard.php?page=lapor_pelanggaran">Melaporkan Pelanggaran</a>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <a href="admin_dashboard.php?page=data_mahasiswa">Data Mahasiswa</a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="admin_dashboard.php?page=data_dosen">Data Dosen</a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="admin_dashboard.php?page=daftar_akun">Data Akun</a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                  
-                </td>
-            </tr>
-            <tr>
-                <td>
-                   
+                    <a href="mahasiswa_dashboard.php?page=cek_laporan">Cek Laporan</a>
                 </td>
             </tr>
             <tr>

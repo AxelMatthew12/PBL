@@ -36,6 +36,45 @@ ob_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TATIB Dashboard</title>
     <link rel="stylesheet" href="../../view/style/Admincss.css">
+    <style>
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        label {
+            color: #004080;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #cce7ff;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #003366;
+        }
+        form {
+            margin: 0; /* Mengatur margin form menjadi 0 */
+            width: 100%; /* Pastikan form memanfaatkan seluruh lebar */
+            box-sizing: border-box;
+        }
+</style>
 </head>
 
 <body>
@@ -106,165 +145,117 @@ ob_start();
 
                         case 'tambah_mahasiswa':
                             // Query untuk mengambil data unik dari kolom prodi dan kelas
-$query_prodi = "SELECT DISTINCT prodi FROM mahasiswa";
-$query_kelas = "SELECT DISTINCT kelas FROM mahasiswa";
+                            $query_prodi = "SELECT DISTINCT prodi FROM mahasiswa";
+                            $query_kelas = "SELECT DISTINCT kelas FROM mahasiswa";
 
-$result_prodi = sqlsrv_query($conn, $query_prodi);
-$result_kelas = sqlsrv_query($conn, $query_kelas);
+                            $result_prodi = sqlsrv_query($conn, $query_prodi);
+                            $result_kelas = sqlsrv_query($conn, $query_kelas);
 
-// Menyimpan data ke array
-$prodi_options = [];
-$kelas_options = [];
+                            // Menyimpan data ke array
+                            $prodi_options = [];
+                            $kelas_options = [];
 
-while ($row = sqlsrv_fetch_array($result_prodi, SQLSRV_FETCH_ASSOC)) {
-    $prodi_options[] = $row['prodi'];
-}
-while ($row = sqlsrv_fetch_array($result_kelas, SQLSRV_FETCH_ASSOC)) {
-    $kelas_options[] = $row['kelas'];
-}
+                            while ($row = sqlsrv_fetch_array($result_prodi, SQLSRV_FETCH_ASSOC)) {
+                                $prodi_options[] = $row['prodi'];
+                            }
+                            while ($row = sqlsrv_fetch_array($result_kelas, SQLSRV_FETCH_ASSOC)) {
+                                $kelas_options[] = $row['kelas'];
+                            }
 
-// Proses tambah mahasiswa
-if (isset($_POST['add-mhs'])) {
+                            // Proses tambah mahasiswa
+                            if (isset($_POST['add-mhs'])) {
 
+                                $nama_mhs = $_POST['nama_mhs'];
+                                $nim = $_POST['nim'];
+                                $jk_mhs = $_POST['jk_mhs'];
+                                $ttl_mhs = $_POST['ttl_mhs'];
+                                $alamat_mhs = $_POST['alamat_mhs'];
+                                $email_mhs = $_POST['email_mhs'];
+                                $prodi_mhs = $_POST['prodi_mhs'];
+                                $kelas_mhs = $_POST['kelas_mhs'];
+                                $dpa_id_mhs = $_POST['dpa_id_mhs'];
 
-    $nama = $_POST['nama'];
-    $nim = $_POST['nim'];
-    $jk = $_POST['jk'];
-    $ttl = $_POST['ttl'];
-    $alamat = $_POST['alamat'];
-    $email = $_POST['email'];
-    $prodi = $_POST['prodi'];
-    $kelas = $_POST['kelas'];
-    $dpa_id = $_POST['dpa_id'];
+                                // Proses upload foto
+                                $foto_mahasiswa = null;
+                                if (!empty($_FILES['foto_mahasiswa_mhs']['name'])) {
+                                    $targetDir = "../../view/img/";
+                                    $foto_mahasiswa_mhs = $targetDir . basename($_FILES['foto_mahasiswa_mhs']['name']);
+                                    move_uploaded_file($_FILES['foto_mahasiswa']['tmp_name'], $foto_mahasiswa_mhs);
+                                }
 
-    // Proses upload foto
-    $foto_mahasiswa = null;
-    if (!empty($_FILES['foto_mahasiswa']['name'])) {
-        $targetDir = "../../view/img/";
-        $foto_mahasiswa = $targetDir . basename($_FILES['foto_mahasiswa']['name']);
-        move_uploaded_file($_FILES['foto_mahasiswa']['tmp_name'], $foto_mahasiswa);
-    }
+                                // Simpan data ke tabel mahasiswa
+                                $query_mhs = "INSERT INTO mahasiswa (nama_mhs, nim, jk_mhs, ttl_mhs, alamat_mhs, email_mhs, prodi_mhs, kelas_mhs, dpa_id_mhs, foto_mahasiswa_mhs) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                $params_mhs = array($nama_mhs, $nim, $jk_mhs, $ttl_mhs, $alamat_mhs, $email_mhs, $prodi_mhs, $kelas_mhs, $dpa_id_mhs, $foto_mahasiswa_mhs);
+                                $stmt_mhs = sqlsrv_query($conn, $query_mhs, $params_mhs);
 
-    // Simpan data ke tabel mahasiswa
-    $query = "INSERT INTO mahasiswa (nama, nim, jk, ttl, alamat, email, prodi, kelas, dpa_id, foto_mahasiswa) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $params = array($nama, $nim, $jk, $ttl, $alamat, $email, $prodi, $kelas, $dpa_id, $foto_mahasiswa);
-    $stmt = sqlsrv_query($conn, $query, $params);
+                                if ($stmt_mhs === false) {
+                                    echo "Error: " . sqlsrv_errors();
+                                } else {
+                                    header('Location: admin_dashboard.php?page=daftar_akun');  // Redirect ke halaman sukses
+                                    exit;  // Pastikan tidak ada kode lebih lanjut yang dijalankan
+                                }
+                            }
+                            ?>
+                            <!DOCTYPE html>
+                            <html lang="id">
+                            <head>
+                            </head>
+                            <body>
+                                <div style="background-color: #ffffff; padding: 20px; padding-bottom: 20px; margin: 0; border-radius: 8px; width: 100%; height: 100%; max-height: 460px; overflow-y: auto; box-sizing: border-box;">
+                                    <h2 style="text-align: center; color: #004080; margin-top: 5px;">Tambah Data Mahasiswa</h2>
+                                    <form action="admin_dashboard.php?page=data_mahasiswa" method="POST" enctype="multipart/form-data">
+                                        <label for="nama_mhs">Nama:</label>
+                                        <input type="text" name="nama_mhs" id="nama_mhs" required><br><br>
 
-    if ($stmt === false) {
-        echo "Error: " . sqlsrv_errors();
-    } else {
-        header('Location: admin_dashboard.php?page=daftar_akun');  // Redirect ke halaman sukses
-        exit;  // Pastikan tidak ada kode lebih lanjut yang dijalankan
-    }
-}
-?>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<style>
-    .form-container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            box-sizing: border-box;
-        }
-        h2 {
-            text-align: center;
-            color: #004080;
-            margin-top: 5px;
-        }
-        label {
-            color: #004080;
-            font-weight: bold;
-        }
-        input, select, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 8px;
-            margin-bottom: 16px;
-            border: 1px solid #cce7ff;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #004080;
-            color: #ffffff;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #003366;
-        }
-        form {
-            margin: 0; /* Mengatur margin form menjadi 0 */
-            width: 100%; /* Pastikan form memanfaatkan seluruh lebar */
-            box-sizing: border-box;
-        }
-</style>
-</head>
-<body>
-    <div style="background-color: #ffffff; padding: 20px; padding-bottom: 20px; margin: 0; border-radius: 8px; width: 100%; height: 100%; max-height: 460px; overflow-y: auto; box-sizing: border-box;">
-        <h2>Tambah Data Mahasiswa</h2>
-        <form action="admin_dashboard.php?page=data_mahasiswa" method="POST" enctype="multipart/form-data">
-            <label for="nama">Nama:</label>
-            <input type="text" name="nama" id="nama" required><br><br>
+                                        <label for="nim">NIM:</label>
+                                        <input type="text" name="nim" id="nim" required><br><br>
 
-            <label for="nim">NIM:</label>
-            <input type="text" name="nim" id="nim" required><br><br>
+                                        <label for="jk_mhs">Jenis Kelamin:</label>
+                                        <select name="jk_mhs" id="jk_mhs" required>
+                                            <option value="Laki-Laki">Laki-Laki</option>
+                                            <option value="Perempuan">Perempuan</option>
+                                        </select><br><br>
 
-            <label for="jk">Jenis Kelamin:</label>
-            <select name="jk" id="jk" required>
-                <option value="Laki-Laki">Laki-Laki</option>
-                <option value="Perempuan">Perempuan</option>
-            </select><br><br>
+                                        <label for="ttl_mhs">Tempat, Tanggal Lahir:</label>
+                                        <input type="text" name="ttl_mhs" id="ttl_mhs" required><br><br>
 
-            <label for="ttl">Tempat, Tanggal Lahir:</label>
-            <input type="text" name="ttl" id="ttl" required><br><br>
+                                        <label for="alamat_mhs">Alamat:</label>
+                                        <input type="text" name="alamat_mhs" id="alamat_mhs" required><br><br>
 
-            <label for="alamat">Alamat:</label>
-            <input type="text" name="alamat" id="alamat" required><br><br>
+                                        <label for="email_mhs">Email:</label>
+                                        <input type="text" name="email_mhs" id="email_mhs" required><br><br>
 
-            <label for="email">Email:</label>
-            <input type="text" name="email" id="email" required><br><br>
+                                        <label for="prodi_mhs">Prodi:</label>
+                                        <select name="prodi_mhs" id="prodi_mhs" required>
+                                            <option value="" disabled selected>Pilih Prodi</option>
+                                            <?php foreach ($prodi_options as $prodi_mhs): ?>
+                                                <option value="<?= htmlspecialchars($prodi_mhs) ?>"><?= htmlspecialchars($prodi_mhs) ?></option>
+                                            <?php endforeach; ?>
+                                        </select><br><br>
 
-            <label for="prodi">Prodi:</label>
-            <select name="prodi" id="prodi" required>
-                <option value="" disabled selected>Pilih Prodi</option>
-                <?php foreach ($prodi_options as $prodi): ?>
-                    <option value="<?= htmlspecialchars($prodi) ?>"><?= htmlspecialchars($prodi) ?></option>
-                <?php endforeach; ?>
-            </select><br><br>
+                                        <label for="kelas_mhs">Kelas:</label>
+                                        <select name="kelas_mhs" id="kelas_mhs" required>
+                                            <option value="" disabled selected>Pilih Kelas</option>
+                                            <?php foreach ($kelas_options as $kelas_mhs): ?>
+                                                <option value="<?= htmlspecialchars($kelas_mhs) ?>"><?= htmlspecialchars($kelas_mhs) ?></option>
+                                            <?php endforeach; ?>
+                                        </select><br><br>
 
-            <label for="kelas">Kelas:</label>
-            <select name="kelas" id="kelas" required>
-                <option value="" disabled selected>Pilih Kelas</option>
-                <?php foreach ($kelas_options as $kelas): ?>
-                    <option value="<?= htmlspecialchars($kelas) ?>"><?= htmlspecialchars($kelas) ?></option>
-                <?php endforeach; ?>
-            </select><br><br>
+                                        <label for="dpa_id_mhs">DPA ID:</label>
+                                        <input type="number" name="dpa_id_mhs" id="dpa_id_mhs" required><br><br>
 
-            <label for="dpa_id">DPA ID:</label>
-            <input type="number" name="dpa_id" id="dpa_id" required><br><br>
+                                        <label for="foto_mahasiswa_mhs">Foto Mahasiswa:</label>
+                                        <input type="file" name="foto_mahasiswa_mhs" id="foto_mahasiswa_mhs" accept="image/*"><br><br>
 
-            <label for="foto_mahasiswa">Foto Mahasiswa:</label>
-            <input type="file" name="foto_mahasiswa" id="foto_mahasiswa" accept="image/*"><br><br>
-
-            <button type="submit" name="add-mhs" style="background-color: #004080; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Tambah</button>
-        </form>
-    </div>
-</body>
-</html>
-<?php
+                                        <button type="submit" name="add-mhs" style="background-color: #004080; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Tambah</button>
+                                    </form>
+                                </div>
+                            </body>
+                            </html>
+                            <?php
                             break;
                         
                     case 'data_dosen':
-                        ?>
-                            <div style="background-color: #ffffff; padding: 20px; padding-bottom: 30px; margin: 0; border-radius: 8px; width: calc(100% - 0px); height: 100%; max-height: 460px; overflow-y: auto; box-sizing: border-box;">
-                        <?php
                         // Query untuk mendapatkan data dosen
                         $query = "SELECT 
                         d.nama, 
@@ -339,12 +330,6 @@ if (isset($_POST['add-mhs'])) {
                                 echo '<br><tr><td>Nama</td><td>: ' . htmlspecialchars($foto['nama']) . '</td></tr>';
                                 echo '<tr><td>NIDN</td><td>: ' . htmlspecialchars($foto['nidn']) . '</td></tr>';
                                 echo '<tr><td>Jenis Kelamin</td><td>: ' . htmlspecialchars($foto['jkn']) . '</td></tr>';
-                                echo '<tr><td>Alamat</td><td>: ' . htmlspecialchars($foto['alamat']) . '</td></tr>';
-                                echo '<tr><td>Email</td><td>: ' . htmlspecialchars($foto['email']) . '</td></tr>';
-                            } elseif ($role == 'mahasiswa') {
-                                echo '<br><tr><td>Nama</td><td>: ' . htmlspecialchars($foto['nama']) . '</td></tr>';
-                                echo '<tr><td>NIM</td><td>: ' . htmlspecialchars($foto['nim']) . '</td></tr>';
-                                echo '<tr><td>Jenis Kelamin</td><td>: ' . htmlspecialchars($foto['jk']) . '</td></tr>';
                                 echo '<tr><td>Alamat</td><td>: ' . htmlspecialchars($foto['alamat']) . '</td></tr>';
                                 echo '<tr><td>Email</td><td>: ' . htmlspecialchars($foto['email']) . '</td></tr>';
                             } elseif ($role == 'admin') {
