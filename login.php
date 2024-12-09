@@ -9,12 +9,13 @@ if ($session->get('is_login') === true) {
     if ($role === 'admin') {
         header('Location: pages/admin/admin_dashboard.php?page=dashboard'); // Arahkan ke halaman dashboard admin
     } else if ($role === 'dosen') {
-        header('Location: pages/dosen/dosen_dashboard.php'); // Arahkan ke halaman dashboard user
+        header('Location: pages/dosen/dosen_dashboard.php?page=dashboard'); // Arahkan ke halaman dashboard user
     } else if ($role === 'mahasiswa') {
-        header('Location: pages/mahasiswa/mahasiswa_dashboard.php'); // Arahkan ke halaman dashboard admin
+        header('Location: pages/mahasiswa/mahasiswa_dashboard.php?page=dashboard'); // Arahkan ke halaman dashboard mahasiswa
     }
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
