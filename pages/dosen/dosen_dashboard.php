@@ -100,5 +100,4 @@ if (isset($_GET['logout'])) {
 </div>
 </div>
 </body>
-
 </html>
