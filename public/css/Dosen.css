@@ -127,7 +127,7 @@ body {
     margin-top: 60px; /* Memberi jarak dari navbar */
     flex-grow: 1;
     padding: 20px;
-    background-image: url("ProfileDosen/gedung.png");
+    background-image: url("../img/ProfileDosen/gedung.png");
     background-size: cover; /* Memastikan gambar menutupi seluruh latar */
     background-position: center; /* Posisi gambar di tengah */
     background-repeat: no-repeat; /* Jangan ulangi gambar */
